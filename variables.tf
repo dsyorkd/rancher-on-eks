@@ -6,6 +6,7 @@ variable "vpc_create" {
 variable "vpc_id" {
   type        = string
   description = "The VPC ID of the pre-existing VPC."
+  nullable    = true
 }
 
 variable "vpc_name" {
