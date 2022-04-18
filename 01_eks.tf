@@ -1,5 +1,5 @@
 data "aws_vpc" "vpc" {
-  id = var.vpc_create ? module.vpc.vpc_id : var.vpc_id
+  id = var.vpc_create == 0 ? module.vpc.vpc_id : var.vpc_id
 }
 
 data "aws_availability_zones" "available" {

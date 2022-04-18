@@ -1,6 +1,4 @@
 region                               = "us-east-2"
-subnet_name_filters_for_cluster      = [""]
-subnet_name_filters_for_nodes        = [""]
 base_domain                          = "aws.twistedlife.space"
 cluster_name                         = "rancher"
 kubernetes_version                   = "1.21.7"
@@ -15,3 +13,4 @@ rancher_admin_password               = "MyB00tstr@pP@ssword"
 rancher_values_filename              = "value"
 vpc_create                           = true
 base_domain_create                   = true
+environment                          = "prod"
