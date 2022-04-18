@@ -1,6 +1,17 @@
+variable "vpc_create" {
+  type        = bool
+  description = "Toggle to create a new VPC"
+}
+
 variable "vpc_id" {
   type        = string
   description = "The VPC ID of the pre-existing VPC."
+}
+
+variable "vpc_name" {
+  type        = string
+  description = "Name for new VPC"
+  default     = "rancher-eks"
 }
 
 variable "region" {
@@ -45,6 +56,11 @@ variable "node_group_instance_type" {
 variable "base_domain" {
   type        = string
   description = "Base domain for the Rancher subdomain."
+}
+
+variable "base_domain_create" {
+  type        = bool
+  description = "Toggle to create route53 zone record for base domain"
 }
 
 variable "cluster_name" {
@@ -110,4 +126,10 @@ variable "rancher_values_filename" {
 variable "rancher_admin_password" {
   type        = string
   description = "Rancher admin password"
+}
+
+
+variable "environment" {
+  type        = string
+  description = "environment rancher is running in E.g. dev, perf, prod"
 }

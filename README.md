@@ -86,6 +86,7 @@ rancher_version | `string` | none | `rancher` Helm chart version to use | `"2.5.
 region | `string` | none | AWS region to use | `"ap-southeast-2"`
 subnet_name_filters_for_cluster | `list(string)` | none | Used to filter the subnet names to find the subnets for the EKS cluster | `["*.public.*", "*.private.*"]`
 subnet_name_filters_for_nodes | `list(string)` | none | Used to filter the subnet names to find the subnets for the nodes | `["*.private.*"]`
+vpc_create | `bool` | none | `Flag to create a new vpc or not` | `true`
 vpc_id | `string` | none | VPC ID | `"vpc-123456"`
 shell_interpreter | `list(string)` | `["bash", "-c"]` | Shell command for CLI commands. eg. [wait_for_cluster_interpreter](https://github.com/terraform-aws-modules/terraform-aws-eks/#inputs) for more information | `["bash", "-c"]`
 

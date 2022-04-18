@@ -1,5 +1,5 @@
 data "aws_vpc" "vpc" {
-  id = var.vpc_id
+  id = var.vpc_create ? module.vpc.vpc_id : var.vpc_id
 }
 
 data "aws_availability_zones" "available" {
@@ -36,13 +36,12 @@ resource "aws_kms_key" "eks" {
 }
 
 module "eks" {
-  source                       = "github.com/terraform-aws-modules/terraform-aws-eks"
-  cluster_name                 = local.cluster_name
-  cluster_version              = var.kubernetes_version
-  vpc_id                       = data.aws_vpc.vpc.id
-  wait_for_cluster_interpreter = var.shell_interpreter
+  source          = "github.com/terraform-aws-modules/terraform-aws-eks"
+  cluster_name    = local.cluster_name
+  cluster_version = var.kubernetes_version
+  vpc_id          = data.aws_vpc.vpc.id
 
-  subnets = flatten([for subnets in data.aws_subnet_ids.cluster_subnet_set : tolist(subnets.ids)])
+  subnet_ids = var.vpc_create && (module.vpc.private_subnets != 0) ? module.private_subnets : flatten([for subnets in data.aws_subnet_ids.cluster_subnet_set : tolist(subnets.ids)])
 
   cluster_encryption_config = [
     {
@@ -51,7 +50,7 @@ module "eks" {
     }
   ]
 
-  workers_group_defaults = {
+  eks_managed_node_group_defaults = {
     subnets              = flatten([for subnets in data.aws_subnet_ids.node_subnet_set : tolist(subnets.ids)])
     asg_max_size         = var.node_group_max_size
     asg_min_size         = var.node_group_min_size
@@ -59,7 +58,7 @@ module "eks" {
     instance_type        = var.node_group_instance_type
   }
 
-  node_groups = {
+  eks_managed_node_groups = {
     main = {
       key_name = ""
     }

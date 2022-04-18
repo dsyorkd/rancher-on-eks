@@ -4,6 +4,7 @@ terraform {
   #   key    = ""
   #   region = ""
   # }
+
   required_providers {
     aws = {
       source = "hashicorp/aws"
