@@ -6,7 +6,7 @@ variable "vpc_create" {
 variable "vpc_id" {
   type        = string
   description = "The VPC ID of the pre-existing VPC."
-  nullable    = true
+  default     = ""
 }
 
 variable "vpc_name" {
@@ -23,11 +23,13 @@ variable "region" {
 variable "subnet_name_filters_for_cluster" {
   type        = list(string)
   description = "The filters to be used on the subnet names to select the subnets to use for the cluster."
+  default     = ["private"]
 }
 
 variable "subnet_name_filters_for_nodes" {
   type        = list(string)
   description = "The filters to be used on the subnet names to select the subnets to use for the nodes."
+  default     = ["public"]
 }
 
 variable "node_group_max_size" {
