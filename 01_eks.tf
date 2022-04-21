@@ -10,7 +10,7 @@ data "aws_subnets" "cluster_subnet_set" {
   count = length(var.subnet_name_filters_for_cluster)
   filter {
     name   = "vpc-id"
-    values = [data.aws_vpc.vpc.id]
+    values = [data.aws_vpc.vpc[0].id]
   }
   filter {
     name   = "tag:Name"
@@ -22,7 +22,7 @@ data "aws_subnets" "node_subnet_set" {
   count = length(var.subnet_name_filters_for_nodes)
   filter {
     name   = "vpc-id"
-    values = [data.aws_vpc.vpc.id]
+    values = [data.aws_vpc.vpc[0].id]
   }
 
   filter {
@@ -47,7 +47,7 @@ module "eks" {
   source          = "github.com/terraform-aws-modules/terraform-aws-eks"
   cluster_name    = local.cluster_name
   cluster_version = var.kubernetes_version
-  vpc_id          = data.aws_vpc.vpc.id
+  vpc_id          = data.aws_vpc.vpc[0].id
 
   subnet_ids = var.vpc_create && (length(flatten(module.vpc.*.private_subnets)) == 0) ? module.vpc.private_subnets : flatten([for subnets in data.aws_subnets.cluster_subnet_set : tolist(subnets.ids)])
 
