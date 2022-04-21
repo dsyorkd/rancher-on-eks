@@ -1,3 +1,7 @@
+variable "account_id" {
+  type        = string
+  description = "aws account id"
+}
 variable "vpc_create" {
   type        = bool
   description = "Toggle to create a new VPC"
