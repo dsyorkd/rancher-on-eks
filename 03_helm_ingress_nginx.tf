@@ -19,6 +19,7 @@ data "kubernetes_service" "ingress_nginx_service" {
 }
 
 data "aws_route53_zone" "dns_zone" {
+  count = var.vpc_create == 0 ? 1 : 0
   name = var.base_domain
 }
 

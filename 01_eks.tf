@@ -1,4 +1,5 @@
 data "aws_vpc" "vpc" {
+  count = var.vpc_create == 0 ? 1 : 0
   id = var.vpc_create == 0 ? module.vpc.vpc_id : var.vpc_id
 }
 
