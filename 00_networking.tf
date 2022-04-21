@@ -19,8 +19,8 @@ module "vpc" {
   }
 }
 
-module "route53" {
-  source  = "terraform-aws-modules/route53/aws"
+module "zones" {
+  source  = "terraform-aws-modules/route53/aws//modules/zones"
   version = "~> 2.6.0"
 
   count = var.base_domain_create ? 1 : 0
@@ -33,7 +33,7 @@ module "route53" {
       }
     }
 
-    var.base_domain = {
+    (var.base_domain) = {
       comment = var.base_domain
       tags = {
         terraform = true

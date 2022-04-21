@@ -34,7 +34,7 @@ terraform {
       source = "rancher/rancher2"
     }
   }
-  required_version = "~ 1.1"
+  required_version = ">= 1.1.8"
 }
 
 provider "aws" {
@@ -43,7 +43,13 @@ provider "aws" {
 
 provider "helm" {
   kubernetes {
-    config_path = module.eks.kubeconfig_filename
+    host                   = module.eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+    exec {
+      api_version = "client.authentication.k8s.io/v1alpha1"
+      args        = ["eks", "get-token", "--cluster-name", var.cluster_name]
+      command     = "aws"
+    }
   }
 }
 
@@ -51,5 +57,4 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
 }
