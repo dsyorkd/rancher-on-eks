@@ -26,13 +26,6 @@ module "zones" {
   count = var.base_domain_create ? 1 : 0
 
   zones = {
-    "terraform-aws-modules-example.com" = {
-      comment = "terraform-aws-modules-examples.com (production)"
-      tags = {
-        env = var.environment
-      }
-    }
-
     (var.base_domain) = {
       comment = var.base_domain
       tags = {
