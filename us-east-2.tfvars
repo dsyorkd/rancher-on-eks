@@ -1,7 +1,7 @@
 region                               = "us-east-2"
 base_domain                          = "aws.twistedlife.space"
 cluster_name                         = "rancher"
-kubernetes_version                   = "1.21.7"
+kubernetes_version                   = "1.22.6"
 ingress_nginx_version                = "3.12.0"
 ingress_nginx_values_filename        = "helm-values/ingress-nginx-values.yaml"
 cert_manager_version                 = "v1.17.2"
